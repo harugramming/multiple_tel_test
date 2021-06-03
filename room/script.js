@@ -1,6 +1,7 @@
-const Peer = window.Peer;
-
-(async function main() {
+const Peer = new Peer({
+  key: '4954a4d5-a104-4803-a49e-bb266e57e855',
+  debug: 3
+});(async function main() {
   const localVideo = document.getElementById('js-local-stream');
   const joinTrigger = document.getElementById('js-join-trigger');
   const leaveTrigger = document.getElementById('js-leave-trigger');
