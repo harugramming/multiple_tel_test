@@ -64,7 +64,7 @@ const Peer = window.Peer;
       newVideo.playsInline = true;
       // mark peerId to find it later at peerLeave event
       newVideo.setAttribute('data-peer-id', stream.peerId);
-      
+
       //ビデオ要素を追加しない
       // remoteVideos.append(newVideo);
       await newVideo.play().catch(console.error);
@@ -72,7 +72,8 @@ const Peer = window.Peer;
 
     room.on('data', ({ data, src }) => {
       // Show a message sent to the room and who sent
-      messages.textContent += `${src}: ${data}\n`;
+      var result = data.split('qwertyuiop');
+      messages.textContent += `${result[0]}: ${result[1]}\n`;
     });
 
     // for closing room members
@@ -103,9 +104,10 @@ const Peer = window.Peer;
 
     function onClickSend() {
       // Send message to all of the peers in the room via websocket
-      room.send(localText.value);
-
-      messages.textContent += `${peer.id}: ${localText.value}\n`;
+      var temp_str = $('#username').val() + "qwertyuiop" + localText.value;
+      console.log(temp_str);
+      room.send(temp_str);
+      messages.textContent += `${$('#username').val()}: ${localText.value}\n`;
       localText.value = '';
     }
   });
