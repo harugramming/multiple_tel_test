@@ -52,9 +52,12 @@ const Peer = window.Peer;
 
     room.once('open', () => {
       messages.textContent += '=== You joined ===\n';
+
+      //先頭に文字列"join"をつけた文字列をroomに送る
+      room.send("join" + $('#username').val());
     });
     room.on('peerJoin', peerId => {
-      messages.textContent += `=== ${peerId} joined ===\n`;
+      // messages.textContent += `=== ${peerId} joined ===\n`;
     });
 
     // Render remote stream for new peer join in the room
@@ -72,8 +75,16 @@ const Peer = window.Peer;
 
     room.on('data', ({ data, src }) => {
       // Show a message sent to the room and who sent
-      var result = data.split('qwertyuiop');
-      messages.textContent += `${result[0]}: ${result[1]}\n`;
+
+      // 先頭の文字列が"join"の場合
+      if(data.indexOf("join") === 0){
+        var result = data.substr( 4 );
+        messages.textContent += `${result}さんが入室しました。\n`;
+      }else{
+        var result = data.split('qwertyuiop');
+        messages.textContent += `${result[0]}: ${result[1]}\n`;
+      }
+
     });
 
     // for closing room members
